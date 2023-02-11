@@ -236,7 +236,6 @@ BuildRequires: golang(gopkg.in/d4l3k/messagediff.v1)
 BuildRequires: golang(gopkg.in/yaml.v2)
 BuildRequires: golang(k8s.io/client-go/tools/cache)
 
-#golang(contrib.go.opencensus.io/exporter/jaeger)
 #golang(github.com/wercker/journalhook)
 
 
