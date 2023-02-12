@@ -5,7 +5,7 @@
 # https://github.com/umbracle/gohashtree
 %global goipath         github.com/umbracle/gohashtree
 Version:                0.0.2
-%global tag             v0.0.2-alpha
+%global commit		676202ebf441956f62fd350cbac0cc88d5c5bf8c
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
