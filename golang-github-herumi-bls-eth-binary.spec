@@ -19,7 +19,7 @@ Version:                1.29.1
 %gometa -f
 
 %global common_description %{expand:
-# FIXME}
+bls for eth with compiled static library.}
 
 %global godocs          examples readme.md
 
@@ -30,6 +30,9 @@ Summary:        None
 License:        # FIXME
 URL:            %{gourl}
 Source:         %{gosource}
+
+BuildRequires:	libstdc++-devel
+BuildRequires:	gcc-c++
 
 %description %{common_description}
 
