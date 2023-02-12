@@ -38,7 +38,7 @@ Source:         %{gosource}
 %prep
 %goprep
 # FIXME Requires extra downloads
-rm -rf spectests
+rm -f spectests/*.go
 
 %generate_buildrequires
 %go_generate_buildrequires
