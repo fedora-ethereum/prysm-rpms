@@ -32,6 +32,10 @@ License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+BuildRequires:  golang(github.com/wealdtech/go-eth2-wallet-types/v2)
+%endif
+
 %description %{common_description}
 
 %gopkg
