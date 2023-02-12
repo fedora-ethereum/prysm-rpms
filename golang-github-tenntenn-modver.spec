@@ -32,6 +32,11 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+# Tests
+BuildRequires:  golang(github.com/google/go-cmp/cmp)
+%endif
+
 %description %{common_description}
 
 %gopkg
