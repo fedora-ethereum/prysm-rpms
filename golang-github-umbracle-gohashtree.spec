@@ -4,7 +4,8 @@
 
 # https://github.com/umbracle/gohashtree
 %global goipath         github.com/umbracle/gohashtree
-Version:                0.0.2-alpha
+Version:                0.0.2
+%global tag             0.0.2-alpha
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
