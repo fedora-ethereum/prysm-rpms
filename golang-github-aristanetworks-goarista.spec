@@ -3,7 +3,7 @@
 
 # https://github.com/aristanetworks/goarista
 %global goipath         github.com/aristanetworks/goarista
-Version:                ockafka-v0.0.5
+Version:                0.0.5
 %global tag             ockafka-v0.0.5
 %global commit          8770395e9995d6eedd11a47e4980f2907c51de40
 
