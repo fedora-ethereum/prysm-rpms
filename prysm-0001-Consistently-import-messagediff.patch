@@ -1,0 +1,528 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Sun, 12 Feb 2023 15:24:17 +0100
+Subject: [PATCH] Consistently import messagediff
+
+
+diff --git a/beacon-chain/blockchain/BUILD.bazel b/beacon-chain/blockchain/BUILD.bazel
+index e9fd0c258..5c7e8d73d 100644
+--- a/beacon-chain/blockchain/BUILD.bazel
++++ b/beacon-chain/blockchain/BUILD.bazel
+@@ -149,7 +149,7 @@ go_test(
+         "@com_github_ethereum_go_ethereum//core/types:go_default_library",
+         "@com_github_sirupsen_logrus//:go_default_library",
+         "@com_github_sirupsen_logrus//hooks/test:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+         "@org_golang_x_net//context:go_default_library",
+     ],
+diff --git a/beacon-chain/rpc/prysm/v1alpha1/beacon/BUILD.bazel b/beacon-chain/rpc/prysm/v1alpha1/beacon/BUILD.bazel
+index 690055a2c..e4836e0a9 100644
+--- a/beacon-chain/rpc/prysm/v1alpha1/beacon/BUILD.bazel
++++ b/beacon-chain/rpc/prysm/v1alpha1/beacon/BUILD.bazel
+@@ -128,7 +128,7 @@ go_test(
+         "//time/slots:go_default_library",
+         "@com_github_golang_mock//gomock:go_default_library",
+         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+         "@org_golang_google_protobuf//types/known/emptypb:go_default_library",
+     ],
+diff --git a/beacon-chain/rpc/prysm/v1alpha1/beacon/committees_test.go b/beacon-chain/rpc/prysm/v1alpha1/beacon/committees_test.go
+index a7fe0d92c..94ec37f38 100644
+--- a/beacon-chain/rpc/prysm/v1alpha1/beacon/committees_test.go
++++ b/beacon-chain/rpc/prysm/v1alpha1/beacon/committees_test.go
+@@ -25,7 +25,7 @@ import (
+ 	prysmTime "github.com/prysmaticlabs/prysm/v3/time"
+ 	"github.com/prysmaticlabs/prysm/v3/time/slots"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func TestServer_ListBeaconCommittees_CurrentEpoch(t *testing.T) {
+diff --git a/deps.bzl b/deps.bzl
+index 389dbb71c..e82234097 100644
+--- a/deps.bzl
++++ b/deps.bzl
+@@ -3795,12 +3795,6 @@ def prysm_deps():
+         sum = "h1:Ev7yu1/f6+d+b3pi5vPdRPc6nNtP1umSfcWiEfRqv6I=",
+         version = "v1.0.25",
+     )
+-    go_repository(
+-        name = "in_gopkg_d4l3k_messagediff_v1",
+-        importpath = "gopkg.in/d4l3k/messagediff.v1",
+-        sum = "h1:70AthpjunwzUiarMHyED52mj9UwtAnE89l1Gmrt3EU0=",
+-        version = "v1.2.1",
+-    )
+     go_repository(
+         name = "in_gopkg_errgo_v2",
+         importpath = "gopkg.in/errgo.v2",
+diff --git a/go.mod b/go.mod
+index 8bf42521d..1bd456828 100644
+--- a/go.mod
++++ b/go.mod
+@@ -89,7 +89,6 @@ require (
+ 	google.golang.org/genproto v0.0.0-20210426193834-eac7f76ac494
+ 	google.golang.org/grpc v1.40.0
+ 	google.golang.org/protobuf v1.28.1
+-	gopkg.in/d4l3k/messagediff.v1 v1.2.1
+ 	gopkg.in/yaml.v2 v2.4.0
+ 	k8s.io/client-go v0.18.3
+ )
+diff --git a/go.sum b/go.sum
+index 2c2900fd3..b8b4efb56 100644
+--- a/go.sum
++++ b/go.sum
+@@ -1746,8 +1746,6 @@ gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8
+ gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
+ gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=
+ gopkg.in/cheggaaa/pb.v1 v1.0.25/go.mod h1:V/YB90LKu/1FcN3WVnfiiE5oMCibMjukxqG/qStrOgw=
+-gopkg.in/d4l3k/messagediff.v1 v1.2.1 h1:70AthpjunwzUiarMHyED52mj9UwtAnE89l1Gmrt3EU0=
+-gopkg.in/d4l3k/messagediff.v1 v1.2.1/go.mod h1:EUzikiKadqXWcD1AzJLagx0j/BeeWGtn++04Xniyg44=
+ gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
+ gopkg.in/fsnotify.v1 v1.4.7/go.mod h1:Tz8NjZHkW78fSQdbUxIjBTcgA1z1m8ZHf0WmKUhAMys=
+ gopkg.in/gcfg.v1 v1.2.3/go.mod h1:yesOnuUOFQAhST5vPY4nbZsb/huCgGGXlipJsBn0b3o=
+diff --git a/testing/spectest/shared/altair/epoch_processing/BUILD.bazel b/testing/spectest/shared/altair/epoch_processing/BUILD.bazel
+index 73e188f86..4ac631a92 100644
+--- a/testing/spectest/shared/altair/epoch_processing/BUILD.bazel
++++ b/testing/spectest/shared/altair/epoch_processing/BUILD.bazel
+@@ -32,7 +32,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/altair/epoch_processing/helpers.go b/testing/spectest/shared/altair/epoch_processing/helpers.go
+index 7ac65e0ac..bf9c17f29 100644
+--- a/testing/spectest/shared/altair/epoch_processing/helpers.go
++++ b/testing/spectest/shared/altair/epoch_processing/helpers.go
+@@ -14,7 +14,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type epochOperation func(*testing.T, state.BeaconState) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/altair/operations/BUILD.bazel b/testing/spectest/shared/altair/operations/BUILD.bazel
+index 5e8a2f9e2..6cc8c1ad7 100644
+--- a/testing/spectest/shared/altair/operations/BUILD.bazel
++++ b/testing/spectest/shared/altair/operations/BUILD.bazel
+@@ -29,7 +29,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/altair/operations/block_header.go b/testing/spectest/shared/altair/operations/block_header.go
+index 9d77f20b0..fe1e08add 100644
+--- a/testing/spectest/shared/altair/operations/block_header.go
++++ b/testing/spectest/shared/altair/operations/block_header.go
+@@ -16,7 +16,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func RunBlockHeaderTest(t *testing.T, config string) {
+diff --git a/testing/spectest/shared/altair/operations/helpers.go b/testing/spectest/shared/altair/operations/helpers.go
+index c4ccdbca6..94f76ebd6 100644
+--- a/testing/spectest/shared/altair/operations/helpers.go
++++ b/testing/spectest/shared/altair/operations/helpers.go
+@@ -18,7 +18,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type blockOperation func(context.Context, state.BeaconState, interfaces.SignedBeaconBlock) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/altair/sanity/BUILD.bazel b/testing/spectest/shared/altair/sanity/BUILD.bazel
+index fe0c5e00e..37af5f917 100644
+--- a/testing/spectest/shared/altair/sanity/BUILD.bazel
++++ b/testing/spectest/shared/altair/sanity/BUILD.bazel
+@@ -22,7 +22,7 @@ go_library(
+         "//testing/util:go_default_library",
+         "@com_github_d4l3k_messagediff//:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/altair/sanity/slot_processing.go b/testing/spectest/shared/altair/sanity/slot_processing.go
+index 7a2283eb9..125769947 100644
+--- a/testing/spectest/shared/altair/sanity/slot_processing.go
++++ b/testing/spectest/shared/altair/sanity/slot_processing.go
+@@ -13,7 +13,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/bellatrix/epoch_processing/BUILD.bazel b/testing/spectest/shared/bellatrix/epoch_processing/BUILD.bazel
+index 66d4aead4..99eb4b062 100644
+--- a/testing/spectest/shared/bellatrix/epoch_processing/BUILD.bazel
++++ b/testing/spectest/shared/bellatrix/epoch_processing/BUILD.bazel
+@@ -32,7 +32,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/bellatrix/epoch_processing/helpers.go b/testing/spectest/shared/bellatrix/epoch_processing/helpers.go
+index 5d5dbfe4b..c0e05b0f4 100644
+--- a/testing/spectest/shared/bellatrix/epoch_processing/helpers.go
++++ b/testing/spectest/shared/bellatrix/epoch_processing/helpers.go
+@@ -14,7 +14,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type epochOperation func(*testing.T, state.BeaconState) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/bellatrix/operations/BUILD.bazel b/testing/spectest/shared/bellatrix/operations/BUILD.bazel
+index 3f96bd8d1..6a3b0006d 100644
+--- a/testing/spectest/shared/bellatrix/operations/BUILD.bazel
++++ b/testing/spectest/shared/bellatrix/operations/BUILD.bazel
+@@ -29,7 +29,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/bellatrix/operations/block_header.go b/testing/spectest/shared/bellatrix/operations/block_header.go
+index 621992d09..9247b3107 100644
+--- a/testing/spectest/shared/bellatrix/operations/block_header.go
++++ b/testing/spectest/shared/bellatrix/operations/block_header.go
+@@ -16,7 +16,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func RunBlockHeaderTest(t *testing.T, config string) {
+diff --git a/testing/spectest/shared/bellatrix/operations/helpers.go b/testing/spectest/shared/bellatrix/operations/helpers.go
+index c72144eb2..617b5a092 100644
+--- a/testing/spectest/shared/bellatrix/operations/helpers.go
++++ b/testing/spectest/shared/bellatrix/operations/helpers.go
+@@ -18,7 +18,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type blockOperation func(context.Context, state.BeaconState, interfaces.SignedBeaconBlock) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/bellatrix/sanity/BUILD.bazel b/testing/spectest/shared/bellatrix/sanity/BUILD.bazel
+index 22641333e..14233a3bb 100644
+--- a/testing/spectest/shared/bellatrix/sanity/BUILD.bazel
++++ b/testing/spectest/shared/bellatrix/sanity/BUILD.bazel
+@@ -22,7 +22,7 @@ go_library(
+         "//testing/util:go_default_library",
+         "@com_github_d4l3k_messagediff//:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/bellatrix/sanity/slot_processing.go b/testing/spectest/shared/bellatrix/sanity/slot_processing.go
+index 31d43a72c..4e42a96f4 100644
+--- a/testing/spectest/shared/bellatrix/sanity/slot_processing.go
++++ b/testing/spectest/shared/bellatrix/sanity/slot_processing.go
+@@ -13,7 +13,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/capella/epoch_processing/BUILD.bazel b/testing/spectest/shared/capella/epoch_processing/BUILD.bazel
+index 1fd464ab0..9c0cde4e5 100644
+--- a/testing/spectest/shared/capella/epoch_processing/BUILD.bazel
++++ b/testing/spectest/shared/capella/epoch_processing/BUILD.bazel
+@@ -32,7 +32,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/capella/epoch_processing/helpers.go b/testing/spectest/shared/capella/epoch_processing/helpers.go
+index ac830fa07..6f002fe8a 100644
+--- a/testing/spectest/shared/capella/epoch_processing/helpers.go
++++ b/testing/spectest/shared/capella/epoch_processing/helpers.go
+@@ -14,7 +14,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type epochOperation func(*testing.T, state.BeaconState) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/capella/operations/BUILD.bazel b/testing/spectest/shared/capella/operations/BUILD.bazel
+index d3c5c2aaa..ae5d52771 100644
+--- a/testing/spectest/shared/capella/operations/BUILD.bazel
++++ b/testing/spectest/shared/capella/operations/BUILD.bazel
+@@ -33,7 +33,7 @@ go_library(
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+         "@com_github_pkg_errors//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/capella/operations/block_header.go b/testing/spectest/shared/capella/operations/block_header.go
+index 9e3fc3982..3cdf7e8a0 100644
+--- a/testing/spectest/shared/capella/operations/block_header.go
++++ b/testing/spectest/shared/capella/operations/block_header.go
+@@ -16,7 +16,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func RunBlockHeaderTest(t *testing.T, config string) {
+diff --git a/testing/spectest/shared/capella/operations/helpers.go b/testing/spectest/shared/capella/operations/helpers.go
+index 0f145de96..2737b9f4e 100644
+--- a/testing/spectest/shared/capella/operations/helpers.go
++++ b/testing/spectest/shared/capella/operations/helpers.go
+@@ -18,7 +18,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type blockOperation func(context.Context, state.BeaconState, interfaces.SignedBeaconBlock) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/capella/sanity/BUILD.bazel b/testing/spectest/shared/capella/sanity/BUILD.bazel
+index 5f84f9132..99cfe9691 100644
+--- a/testing/spectest/shared/capella/sanity/BUILD.bazel
++++ b/testing/spectest/shared/capella/sanity/BUILD.bazel
+@@ -21,7 +21,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/capella/sanity/block_processing.go b/testing/spectest/shared/capella/sanity/block_processing.go
+index 819999087..a1c0d685c 100644
+--- a/testing/spectest/shared/capella/sanity/block_processing.go
++++ b/testing/spectest/shared/capella/sanity/block_processing.go
+@@ -20,7 +20,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/capella/sanity/slot_processing.go b/testing/spectest/shared/capella/sanity/slot_processing.go
+index b547bcc05..a66b50056 100644
+--- a/testing/spectest/shared/capella/sanity/slot_processing.go
++++ b/testing/spectest/shared/capella/sanity/slot_processing.go
+@@ -13,7 +13,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/phase0/finality/BUILD.bazel b/testing/spectest/shared/phase0/finality/BUILD.bazel
+index 4060748a7..9a69c5ab4 100644
+--- a/testing/spectest/shared/phase0/finality/BUILD.bazel
++++ b/testing/spectest/shared/phase0/finality/BUILD.bazel
+@@ -17,7 +17,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+ )
+diff --git a/testing/spectest/shared/phase0/finality/runner.go b/testing/spectest/shared/phase0/finality/runner.go
+index 91e7acf40..12d32ceba 100644
+--- a/testing/spectest/shared/phase0/finality/runner.go
++++ b/testing/spectest/shared/phase0/finality/runner.go
+@@ -16,7 +16,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/phase0/operations/BUILD.bazel b/testing/spectest/shared/phase0/operations/BUILD.bazel
+index 182c3155c..350485350 100644
+--- a/testing/spectest/shared/phase0/operations/BUILD.bazel
++++ b/testing/spectest/shared/phase0/operations/BUILD.bazel
+@@ -28,7 +28,7 @@ go_library(
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+         "@com_github_pkg_errors//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/phase0/operations/block_header.go b/testing/spectest/shared/phase0/operations/block_header.go
+index fd7c0ab72..76d7240ac 100644
+--- a/testing/spectest/shared/phase0/operations/block_header.go
++++ b/testing/spectest/shared/phase0/operations/block_header.go
+@@ -16,7 +16,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ // RunBlockHeaderTest executes "operations/block_header" tests.
+diff --git a/testing/spectest/shared/phase0/operations/helpers.go b/testing/spectest/shared/phase0/operations/helpers.go
+index 0227b4eac..ced4cc734 100644
+--- a/testing/spectest/shared/phase0/operations/helpers.go
++++ b/testing/spectest/shared/phase0/operations/helpers.go
+@@ -18,7 +18,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/require"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ type blockOperation func(context.Context, state.BeaconState, interfaces.SignedBeaconBlock) (state.BeaconState, error)
+diff --git a/testing/spectest/shared/phase0/sanity/BUILD.bazel b/testing/spectest/shared/phase0/sanity/BUILD.bazel
+index eb5a86bcb..e0fdfaea4 100644
+--- a/testing/spectest/shared/phase0/sanity/BUILD.bazel
++++ b/testing/spectest/shared/phase0/sanity/BUILD.bazel
+@@ -21,7 +21,7 @@ go_library(
+         "//testing/spectest/utils:go_default_library",
+         "//testing/util:go_default_library",
+         "@com_github_golang_snappy//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@org_golang_google_protobuf//proto:go_default_library",
+     ],
+diff --git a/testing/spectest/shared/phase0/sanity/block_processing.go b/testing/spectest/shared/phase0/sanity/block_processing.go
+index 08fd9f49d..c83410385 100644
+--- a/testing/spectest/shared/phase0/sanity/block_processing.go
++++ b/testing/spectest/shared/phase0/sanity/block_processing.go
+@@ -20,7 +20,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/testing/spectest/shared/phase0/sanity/slot_processing.go b/testing/spectest/shared/phase0/sanity/slot_processing.go
+index 09b7d8bb7..596df4747 100644
+--- a/testing/spectest/shared/phase0/sanity/slot_processing.go
++++ b/testing/spectest/shared/phase0/sanity/slot_processing.go
+@@ -13,7 +13,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/spectest/utils"
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	"google.golang.org/protobuf/proto"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func init() {
+diff --git a/tools/pcli/BUILD.bazel b/tools/pcli/BUILD.bazel
+index 897981535..6e84d279e 100644
+--- a/tools/pcli/BUILD.bazel
++++ b/tools/pcli/BUILD.bazel
+@@ -21,7 +21,7 @@ go_library(
+         "@com_github_prysmaticlabs_fastssz//:go_default_library",
+         "@com_github_sirupsen_logrus//:go_default_library",
+         "@com_github_urfave_cli_v2//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+     ],
+ )
+ 
+diff --git a/tools/pcli/main.go b/tools/pcli/main.go
+index bb5abe1ca..d80d6b96a 100644
+--- a/tools/pcli/main.go
++++ b/tools/pcli/main.go
+@@ -19,7 +19,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/runtime/version"
+ 	log "github.com/sirupsen/logrus"
+ 	"github.com/urfave/cli/v2"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func main() {
+diff --git a/validator/client/BUILD.bazel b/validator/client/BUILD.bazel
+index 3c1817c83..c921f4ff3 100644
+--- a/validator/client/BUILD.bazel
++++ b/validator/client/BUILD.bazel
+@@ -161,7 +161,7 @@ go_test(
+         "@com_github_sirupsen_logrus//hooks/test:go_default_library",
+         "@com_github_tyler_smith_go_bip39//:go_default_library",
+         "@com_github_wealdtech_go_eth2_util//:go_default_library",
+-        "@in_gopkg_d4l3k_messagediff_v1//:go_default_library",
++        "@com_github_d4l3k_messagediff//:go_default_library",
+         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+         "@io_bazel_rules_go//proto/wkt:empty_go_proto",
+         "@org_golang_google_grpc//metadata:go_default_library",
+diff --git a/validator/client/attest_test.go b/validator/client/attest_test.go
+index 97d0b09f0..59185a6e0 100644
+--- a/validator/client/attest_test.go
++++ b/validator/client/attest_test.go
+@@ -27,7 +27,7 @@ import (
+ 	"github.com/prysmaticlabs/prysm/v3/testing/util"
+ 	prysmTime "github.com/prysmaticlabs/prysm/v3/time"
+ 	logTest "github.com/sirupsen/logrus/hooks/test"
+-	"gopkg.in/d4l3k/messagediff.v1"
++	"github.com/d4l3k/messagediff"
+ )
+ 
+ func TestRequestAttestation_ValidatorDutiesRequestFailure(t *testing.T) {

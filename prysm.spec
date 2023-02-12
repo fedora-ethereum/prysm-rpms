@@ -61,6 +61,7 @@ Summary:        Go implementation of Ethereum proof of stake
 License:        MIT AND Apache-2.0 AND MPL-2.0 AND GPL-3.0-only
 URL:            %{gourl}
 Source:         %{gosource}
+Patch1:		prysm-0001-Consistently-import-messagediff.patch
 
 BuildRequires: golang(contrib.go.opencensus.io/exporter/jaeger)
 BuildRequires: golang(github.com/MariusVanDerWijden/FuzzyVM/filler)
@@ -68,6 +69,7 @@ BuildRequires: golang(github.com/MariusVanDerWijden/tx-fuzz)
 BuildRequires: golang(github.com/aristanetworks/goarista/monotime)
 BuildRequires: golang(github.com/bazelbuild/rules_go/go/tools/bazel)
 BuildRequires: golang(github.com/btcsuite/btcd/btcec/v2)
+BuildRequires: golang(github.com/d4l3k/messagediff)
 BuildRequires: golang(github.com/d4l3k/messagediff)
 BuildRequires: golang(github.com/dgraph-io/ristretto)
 BuildRequires: golang(github.com/dustin/go-humanize)
@@ -232,7 +234,6 @@ BuildRequires: golang(google.golang.org/protobuf/types/descriptorpb)
 BuildRequires: golang(google.golang.org/protobuf/types/known/anypb)
 BuildRequires: golang(google.golang.org/protobuf/types/known/emptypb)
 BuildRequires: golang(google.golang.org/protobuf/types/known/timestamppb)
-BuildRequires: golang(gopkg.in/d4l3k/messagediff.v1)
 BuildRequires: golang(gopkg.in/yaml.v2)
 BuildRequires: golang(k8s.io/client-go/tools/cache)
 
