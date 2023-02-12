@@ -32,6 +32,11 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+# Tests
+BuildRequires:  golang(github.com/josharian/txtarfs)
+%endif
+
 %description %{common_description}
 
 %gopkg
