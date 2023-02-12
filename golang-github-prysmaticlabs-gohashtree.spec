@@ -33,8 +33,6 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
-#BuildRequires:  golang(golang-github-klauspost-cpuid)
-
 %if %{with check}
 # Tests
 BuildRequires:  golang(github.com/minio/sha256-simd)
