@@ -34,6 +34,11 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+# Tests
+BuildRequires:  golang(github.com/minio/sha256-simd)
+%endif
+
 %description %{common_description}
 
 %gopkg
