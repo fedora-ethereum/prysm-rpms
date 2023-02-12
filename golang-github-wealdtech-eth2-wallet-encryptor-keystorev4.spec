@@ -19,7 +19,7 @@ Version:                1.3.0
 %gometa -f
 
 %global common_description %{expand:
-# FIXME}
+Keystore version 4-compliant encryptor for the Ethereum 2 wallet.}
 
 %global golicenses      LICENSE
 %global godocs          README.md

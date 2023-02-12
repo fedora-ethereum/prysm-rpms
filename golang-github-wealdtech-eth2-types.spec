@@ -2,9 +2,9 @@
 %bcond_without check
 %global debug_package %{nil}
 
-# https://github.com/wealdtech/go-bytesutil
-%global goipath         github.com/wealdtech/go-bytesutil
-Version:                1.2.0
+# https://github.com/wealdtech/go-eth2-types
+%global goipath         github.com/wealdtech/go-eth2-types
+Version:                2.8.0
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
@@ -19,7 +19,7 @@ Version:                1.2.0
 %gometa -f
 
 %global common_description %{expand:
-Go library providing common byte manipulation utilities.}
+Go library providing Ethereum 2 types.}
 
 %global golicenses      LICENSE
 %global godocs          README.md
@@ -31,10 +31,6 @@ Summary:        None
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
-
-%if %{with check}
-BuildRequires:  golang(github.com/stretchr/testify/assert)
-%endif
 
 %description %{common_description}
 

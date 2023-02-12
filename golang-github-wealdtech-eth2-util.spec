@@ -19,7 +19,7 @@ Version:                1.8.0
 %gometa -f
 
 %global common_description %{expand:
-# FIXME}
+Go library providing utilities for Ethereum 2.}
 
 %global golicenses      LICENSE
 %global godocs          README.md
