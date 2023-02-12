@@ -37,8 +37,6 @@ Source:         %{gosource}
 %if %{with check}
 # Tests
 BuildRequires:  golang(github.com/minio/sha256-simd)
-# FIXME this looks like a mistake
-BuildRequires:  golang(github.com/prysmaticlabs/gohashtree)
 %endif
 
 %description %{common_description}
