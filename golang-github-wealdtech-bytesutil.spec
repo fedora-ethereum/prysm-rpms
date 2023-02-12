@@ -32,6 +32,10 @@ License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+BuildRequires:  golang(github.com/stretchr/testify/assert)
+%endif
+
 %description %{common_description}
 
 %gopkg
