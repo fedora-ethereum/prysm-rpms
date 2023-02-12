@@ -3,7 +3,7 @@
 
 # https://github.com/btcsuite/btcd
 %global goipath         github.com/btcsuite/btcd
-Version:                btcutil/psbt/v1.1.7
+Version:                1.1.7
 %global tag             btcutil/psbt/v1.1.7
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
