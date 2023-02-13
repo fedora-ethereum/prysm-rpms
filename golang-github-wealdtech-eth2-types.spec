@@ -31,6 +31,8 @@ Summary:        None
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# FIXME should go to herumi/bls-eth-go-binary
+BuildRequires:	mcl-devel
 
 %if %{with check}
 # Tests
