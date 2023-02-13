@@ -32,6 +32,11 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+# Tests
+BuildRequires:  golang(github.com/gostaticanalysis/testutil)
+%endif
+
 %description %{common_description}
 
 %gopkg
