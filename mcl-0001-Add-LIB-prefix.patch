@@ -1,0 +1,26 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Mon, 13 Feb 2023 13:05:33 +0100
+Subject: [PATCH] Add LIB prefix
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/Makefile b/Makefile
+index 4e87c8ae..81307423 100644
+--- a/Makefile
++++ b/Makefile
+@@ -445,12 +445,13 @@ DEPEND_FILE=$(addprefix $(OBJ_DIR)/, $(addsuffix .d,$(basename $(ALL_SRC))))
+ -include $(DEPEND_FILE)
+ 
+ PREFIX?=/usr/local
++LIB?=/lib
+ install: lib/libmcl.a lib/libmcl.$(LIB_SUF)
+ 	$(MKDIR) $(PREFIX)/include/mcl
+ 	cp -a include/mcl $(PREFIX)/include/
+ 	cp -a include/cybozu $(PREFIX)/include/
+-	$(MKDIR) $(PREFIX)/lib
+-	cp -a lib/libmcl.a lib/libmcl.$(LIB_SUF) $(PREFIX)/lib/
++	$(MKDIR) $(PREFIX)$(LIB)
++	cp -a lib/libmcl.a lib/libmcl.$(LIB_SUF) $(PREFIX)$(LIB)/
+ 
+ .PHONY: test she-wasm bin/emu
+ 
