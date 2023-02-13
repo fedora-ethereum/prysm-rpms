@@ -36,6 +36,9 @@ BuildRequires:	gcc-c++
 
 %description %{common_description}
 
+%package devel
+Requires:	mcl-devel
+
 %gopkg
 
 %prep
