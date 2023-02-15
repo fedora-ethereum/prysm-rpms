@@ -19,9 +19,8 @@ A portable and fast pairing-based cryptography library.
 
 
 %package devel
-Summary:	Development files for libmcl
-# FIXME a proper soname versioning would be nice
-#Requires:	%{name}%{?_isa} = %{version}-%{release}
+Summary:	Development files for mcl
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 
 %description devel
