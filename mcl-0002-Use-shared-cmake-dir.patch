@@ -1,0 +1,19 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Wed, 15 Feb 2023 02:09:04 +0100
+Subject: [PATCH] Use shared cmake dir
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8e5373e8..1dad6324 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -281,7 +281,7 @@ install(DIRECTORY include/cybozu
+ install(EXPORT mclTargets
+ 	FILE mclTargets.cmake
+ 	NAMESPACE mcl::
+-	DESTINATION lib/cmake/mcl)
++	DESTINATION /usr/share/cmake/Modules)
+ 
+ # support local build-tree export to allow import from external projects
+ export(EXPORT mclTargets

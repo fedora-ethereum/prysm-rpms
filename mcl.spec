@@ -5,10 +5,12 @@ Release:	%autorelease
 License:	BSD
 URL:		https://github.com/herumi/%{name}
 Source0:	https://github.com/herumi/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch1:		mcl-0001-Add-LIB-prefix.patch
+Patch1:		mcl-0001-Use-lib-suffix.patch
+Patch2:		mcl-0002-Use-shared-cmake-dir.patch
 BuildRequires:	gmp-devel
 BuildRequires:	libtool
 BuildRequires:	make
+BuildRequires:	cmake
 BuildRequires:  gcc-c++
 
 
@@ -30,28 +32,40 @@ A portable and fast pairing-based cryptography library.
 %autosetup -p1
 
 %build
-%make_build
+%cmake . -DMCL_STATIC_LIB=OFF -DMCL_USE_LLVM=OFF
+%cmake_build
 
 
 %install
-PREFIX=%{buildroot}/usr/ LIB=%{_lib} %make_install
+%cmake_install
 
 
 %check
 #make test
 
 
-#%%files
-# FIXME a proper soname versioning would be nice
-# empty
+%files
+%license COPYRIGHT
+%{_libdir}/libmcl.so.1
+%{_libdir}/libmcl.so.1.74
+%{_libdir}/libmclbn256.so.1
+%{_libdir}/libmclbn256.so.1.74
+%{_libdir}/libmclbn384.so.1
+%{_libdir}/libmclbn384.so.1.74
+%{_libdir}/libmclbn384_256.so.1
+%{_libdir}/libmclbn384_256.so.1.74
 
 
 %files devel
-%license COPYRIGHT
-%{_includedir}/cybozu/
+%{_datadir}/cmake/Modules/mclTargets-noconfig.cmake
+%{_datadir}/cmake/Modules/mclTargets.cmake
 %{_includedir}/%{name}
-%{_libdir}/lib%{name}.so
+%{_includedir}/cybozu/
 %{_libdir}/lib%{name}.a
+%{_libdir}/lib%{name}.so
+%{_libdir}/libmclbn256.so
+%{_libdir}/libmclbn384.so
+%{_libdir}/libmclbn384_256.so
 
 
 %changelog
