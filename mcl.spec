@@ -31,7 +31,7 @@ A portable and fast pairing-based cryptography library.
 %autosetup -p1
 
 %build
-%cmake . -DMCL_STATIC_LIB=OFF -DMCL_USE_LLVM=OFF
+%cmake . -DMCL_STATIC_LIB=OFF -DMCL_USE_LLVM=OFF -DCMAKE_BUILD_TYPE=Config
 %cmake_build
 
 
@@ -56,7 +56,7 @@ A portable and fast pairing-based cryptography library.
 
 
 %files devel
-%{_datadir}/cmake/Modules/mclTargets-noconfig.cmake
+%{_datadir}/cmake/Modules/mclTargets-config.cmake
 %{_datadir}/cmake/Modules/mclTargets.cmake
 %{_includedir}/%{name}
 %{_includedir}/cybozu/
