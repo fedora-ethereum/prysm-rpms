@@ -31,7 +31,6 @@ License:        # FIXME
 URL:            %{gourl}
 Source:         %{gosource}
 
-BuildRequires:	libstdc++-devel
 BuildRequires:	gcc-c++
 
 %description %{common_description}
