@@ -1,0 +1,19 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 17 Feb 2023 20:27:35 +0100
+Subject: [PATCH] Use shared cmake dir
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9d78965..400def8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,7 +71,7 @@ install(DIRECTORY include/bls
+ install(EXPORT blsTargets
+ 	FILE blsTargets.cmake
+ 	NAMESPACE bls::
+-	DESTINATION lib/cmake/bls)
++	DESTINATION /usr/share/cmake/Modules)
+ 
+ export(EXPORT blsTargets
+ 	FILE blsTargets.cmake

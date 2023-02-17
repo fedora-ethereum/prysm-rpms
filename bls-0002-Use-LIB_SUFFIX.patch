@@ -1,0 +1,34 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 17 Feb 2023 20:25:11 +0100
+Subject: [PATCH] Use LIB_SUFFIX
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c7262b0..9d78965 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,8 +4,8 @@ project(bls
+   VERSION 1.10
+   LANGUAGES CXX ASM C)
+ 
+-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
++set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX})
++set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX})
+ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+ 
+ option(
+@@ -63,9 +63,9 @@ endforeach()
+ 
+ install(TARGETS bls256 bls384 bls384_256
+ 	EXPORT blsTargets
+-	LIBRARY DESTINATION lib
+-	ARCHIVE DESTINATION lib
+-	RUNTIME DESTINATION lib)
++	LIBRARY DESTINATION lib${LIB_SUFFIX}
++	ARCHIVE DESTINATION lib${LIB_SUFFIX}
++	RUNTIME DESTINATION lib${LIB_SUFFIX})
+ install(DIRECTORY include/bls
+ 	DESTINATION include)
+ install(EXPORT blsTargets

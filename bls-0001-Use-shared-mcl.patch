@@ -1,0 +1,20 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Wed, 15 Feb 2023 11:05:14 +0100
+Subject: [PATCH] Use shared mcl
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0b7c9a9..c7262b0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -46,8 +46,7 @@ else()
+ 	set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
+ endif()
+ 
+-add_subdirectory(mcl)
+-
++include(Mcl)
+ foreach(bit IN ITEMS 256 384 384_256)
+ 	add_library(bls${bit} SHARED src/bls_c${bit}.cpp)
+ 	add_library(bls::bls${bit} ALIAS bls${bit})
