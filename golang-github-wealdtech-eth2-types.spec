@@ -35,6 +35,7 @@ Source:         %{gosource}
 BuildRequires:	mcl-devel
 # FIXME should go to herumi/bls-eth-go-binary
 BuildRequires:	bls-devel
+BuildRequires:	gcc-c++
 
 %if %{with check}
 # Tests
