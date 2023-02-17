@@ -33,6 +33,10 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
+%if %{with check}
+BuildRequires:  golang(github.com/onsi/gomega)
+%endif
+
 %description %{common_description}
 
 %gopkg
