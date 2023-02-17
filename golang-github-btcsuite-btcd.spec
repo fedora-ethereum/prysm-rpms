@@ -52,17 +52,6 @@ License:        ISC
 URL:            %{gourl}
 Source:         %{gosource}
 
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/aead/siphash)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/btcsuite/btclog)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/btcsuite/go-socks/socks)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/btcsuite/websocket)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/decred/dcrd/dcrec/secp256k1/v4)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/decred/dcrd/dcrec/secp256k1/v4/ecdsa)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/decred/dcrd/dcrec/secp256k1/v4/schnorr)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/decred/dcrd/lru)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/jrick/logrotate/rotator)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/kkdai/bstream)'
-
 %description %{common_description}
 
 %gopkg

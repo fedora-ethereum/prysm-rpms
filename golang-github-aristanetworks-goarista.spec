@@ -39,15 +39,6 @@ License:        BSD-3-Clause AND Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
 
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/aristanetworks/fsnotify)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/aristanetworks/glog)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/aristanetworks/splunk-hec-go)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/openconfig/gnmi/proto/gnmi)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/openconfig/gnmi/proto/gnmi_ext)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/openconfig/reference/rpc/openconfig)'
-DEBUG util.py:443:  No matching package to install: 'golang(github.com/xtaci/kcp-go)'
-DEBUG util.py:443:  No matching package to install: 'golang(gopkg.in/redis.v4)'
-
 %description %{common_description}
 
 %gopkg
