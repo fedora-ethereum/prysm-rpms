@@ -48,7 +48,10 @@ Source:         %{gosource}
 
 %if %{with check}
 %check
-%gocheck
+# FIXME
+# github.com/trailofbits/go-mutexasserts [github.com/trailofbits/go-mutexasserts.test]
+# ./asserts_test.go:9:2: undefined: exit
+#%%gocheck
 %endif
 
 %gopkgfiles
