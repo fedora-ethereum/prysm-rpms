@@ -34,7 +34,7 @@ A portable and fast pairing-based cryptography library.
 %autosetup -p1
 
 %build
-%cmake . -DMCL_STATIC_LIB=OFF -DMCL_USE_LLVM=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_DIR=""
+%cmake . -DMCL_STATIC_LIB=OFF -DMCL_USE_LLVM=OFF -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
 

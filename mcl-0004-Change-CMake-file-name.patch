@@ -1,0 +1,42 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 17 Feb 2023 19:37:09 +0100
+Subject: [PATCH] Change CMake file name
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1dad6324..d92feaf8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -261,7 +261,7 @@ foreach(bit IN ITEMS 256 384 384_256)
+ endforeach()
+ 
+ install(TARGETS mcl mcl_st mclbn256 mclbn384 mclbn384_256
+-	EXPORT mclTargets
++	EXPORT Mcl
+ 	LIBRARY DESTINATION lib${LIB_SUFFIX}
+ 	ARCHIVE DESTINATION lib${LIB_SUFFIX}
+ 	RUNTIME DESTINATION lib${LIB_SUFFIX})
+@@ -278,17 +278,17 @@ install(DIRECTORY include/cybozu
+ 	DESTINATION include
+ 	FILES_MATCHING PATTERN "*.hpp")
+ 
+-install(EXPORT mclTargets
+-	FILE mclTargets.cmake
++install(EXPORT Mcl
++	FILE Mcl.cmake
+ 	NAMESPACE mcl::
+ 	DESTINATION /usr/share/cmake/Modules)
+ 
+ # support local build-tree export to allow import from external projects
+-export(EXPORT mclTargets
+-	FILE mclTargets.cmake
++export(EXPORT Mcl
++	FILE Mcl.cmake
+ 	NAMESPACE mcl::)
+ set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+-export(PACKAGE mcl)
++export(PACKAGE Mcl)
+ 
+ 
+ # Tests

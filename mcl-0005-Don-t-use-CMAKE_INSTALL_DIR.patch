@@ -1,0 +1,28 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 17 Feb 2023 19:54:52 +0100
+Subject: [PATCH] Don't use CMAKE_INSTALL_DIR
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d92feaf8..ce0e8e8c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -75,7 +75,7 @@ add_library(mcl::mcl ALIAS mcl)
+ target_compile_definitions(mcl PUBLIC MCL_NO_AUTOLINK MCLBN_NO_AUTOLINK)
+ target_include_directories(mcl PUBLIC
+ 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-	$<INSTALL_INTERFACE:$CMAKE_INSTALL_DIR/include>)
++	$<INSTALL_INTERFACE:include>)
+ set_target_properties(mcl PROPERTIES
+ 	POSITION_INDEPENDENT_CODE ON)
+ set_target_properties(mcl PROPERTIES
+@@ -90,7 +90,7 @@ add_library(mcl::mcl_st ALIAS mcl_st)
+ target_compile_definitions(mcl_st PUBLIC MCL_NO_AUTOLINK MCLBN_NO_AUTOLINK)
+ target_include_directories(mcl_st PUBLIC
+ 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-	$<INSTALL_INTERFACE:$CMAKE_INSTALL_DIR/include>)
++	$<INSTALL_INTERFACE:include>)
+ set_target_properties(mcl_st PROPERTIES
+ 	OUTPUT_NAME mcl
+ 	POSITION_INDEPENDENT_CODE ON)
