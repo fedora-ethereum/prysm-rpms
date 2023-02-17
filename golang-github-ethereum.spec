@@ -3,7 +3,7 @@
 
 # https://github.com/ethereum/go-ethereum
 %global goipath         github.com/ethereum/go-ethereum
-Version:                1.10.26
+Version:                1.11.1
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
@@ -46,7 +46,7 @@ Name:           %{goname}
 Release:        %autorelease
 Summary:        Official Go implementation of the Ethereum protocol
 
-License:        GPL-3.0-only AND Apache-2.0 AND BSD-2-Clause-Views AND BSD-3-Clause AND MIT
+License:        GPL-3.0-only AND BSD-3-Clause AND BSD-2-Clause-Views AND Apache-2.0 AND MIT
 URL:            %{gourl}
 Source:         %{gosource}
 
@@ -64,7 +64,7 @@ Source:         %{gosource}
 for cmd in cmd/* ; do
   %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
 done
-for cmd in build miner/stress/1559 miner/stress/ethash rlp/rlpgen miner/stress/beacon core miner/stress/clique; do
+for cmd in rlp/rlpgen miner/stress/1559 core build miner/stress/beacon miner/stress/ethash miner/stress/clique; do
   %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
 done
 
