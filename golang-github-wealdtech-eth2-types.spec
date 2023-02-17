@@ -33,6 +33,8 @@ URL:            %{gourl}
 Source:         %{gosource}
 # FIXME should go to herumi/bls-eth-go-binary
 BuildRequires:	mcl-devel
+# FIXME should go to herumi/bls-eth-go-binary
+BuildRequires:	bls-devel
 
 %if %{with check}
 # Tests
