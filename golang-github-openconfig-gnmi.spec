@@ -36,6 +36,7 @@ Summary:        GRPC Network Management Interface
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+Patch1:		golang-github-openconfig-gnmi-0001-Bootstrap-w-o-ygot-support.patch
 
 %description %{common_description}
 
@@ -60,7 +61,7 @@ install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 
 %if %{with check}
 %check
-%gocheck
+#%%gocheck
 %endif
 
 %files

@@ -1,0 +1,48 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Sat, 25 Mar 2023 20:29:36 +0100
+Subject: [PATCH] Bootstrap w/o ygot support
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/client/gnmi/client.go b/client/gnmi/client.go
+index 781b7df..9a83d54 100644
+--- a/client/gnmi/client.go
++++ b/client/gnmi/client.go
+@@ -34,7 +34,6 @@ import (
+ 	"google.golang.org/grpc/credentials"
+ 	"google.golang.org/grpc"
+ 	"google.golang.org/protobuf/proto"
+-	"github.com/openconfig/ygot/ygot"
+ 	"github.com/openconfig/gnmi/client"
+ 	"github.com/openconfig/gnmi/path"
+ 	"github.com/openconfig/gnmi/value"
+@@ -265,7 +264,7 @@ func subscribe(q client.Query) (*gpb.SubscribeRequest, error) {
+ 		s.Subscribe.UpdatesOnly = true
+ 	}
+ 	for _, qq := range q.Queries {
+-		pp, err := ygot.StringToPath(pathToString(qq), ygot.StructuredPath, ygot.StringSlicePath)
++		pp, err := nil, nil
+ 		if err != nil {
+ 			return nil, fmt.Errorf("invalid query path %q: %v", qq, err)
+ 		}
+diff --git a/client/gnmi/client_test.go b/client/gnmi/client_test.go
+index 8afab8e..e6fc20d 100644
+--- a/client/gnmi/client_test.go
++++ b/client/gnmi/client_test.go
+@@ -24,7 +24,6 @@ import (
+ 
+ 	"github.com/kylelemons/godebug/pretty"
+ 	"google.golang.org/grpc"
+-	"github.com/openconfig/ygot/ygot"
+ 	"github.com/openconfig/gnmi/client"
+ 	"github.com/openconfig/gnmi/testing/fake/gnmi"
+ 	"github.com/openconfig/gnmi/testing/fake/testing/grpc/config"
+@@ -417,7 +416,7 @@ func TestGNMIWithSubscribeRequest(t *testing.T) {
+ }
+ 
+ func stringToPath(p string) *gpb.Path {
+-	pp, err := ygot.StringToPath(p, ygot.StructuredPath, ygot.StringSlicePath)
++	pp, err := nil, nil
+ 	if err != nil {
+ 		panic(err)
+ 	}
