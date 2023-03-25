@@ -5,7 +5,7 @@ Subject: [PATCH] Bootstrap w/o ygot support
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 
 diff --git a/client/gnmi/client.go b/client/gnmi/client.go
-index 781b7df..9a83d54 100644
+index 781b7df..156595e 100644
 --- a/client/gnmi/client.go
 +++ b/client/gnmi/client.go
 @@ -34,7 +34,6 @@ import (
@@ -21,12 +21,12 @@ index 781b7df..9a83d54 100644
  	}
  	for _, qq := range q.Queries {
 -		pp, err := ygot.StringToPath(pathToString(qq), ygot.StructuredPath, ygot.StringSlicePath)
-+		pp, err := nil, nil
++		pp, err := "", nil
  		if err != nil {
  			return nil, fmt.Errorf("invalid query path %q: %v", qq, err)
  		}
 diff --git a/client/gnmi/client_test.go b/client/gnmi/client_test.go
-index 8afab8e..e6fc20d 100644
+index 8afab8e..eef719b 100644
 --- a/client/gnmi/client_test.go
 +++ b/client/gnmi/client_test.go
 @@ -24,7 +24,6 @@ import (
@@ -42,7 +42,7 @@ index 8afab8e..e6fc20d 100644
  
  func stringToPath(p string) *gpb.Path {
 -	pp, err := ygot.StringToPath(p, ygot.StructuredPath, ygot.StringSlicePath)
-+	pp, err := nil, nil
++	pp, err := "", nil
  	if err != nil {
  		panic(err)
  	}
