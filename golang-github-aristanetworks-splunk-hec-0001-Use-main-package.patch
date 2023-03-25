@@ -4,6 +4,19 @@ Subject: [PATCH] Use main package
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 
+diff --git a/example/main.go b/example/main.go
+index b092528..d426d29 100644
+--- a/example/main.go
++++ b/example/main.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"time"
+ 
+-	"github.com/fuyufjh/splunk-hec-go"
++	"github.com/aristanetworks/splunk-hec-go"
+ )
+ 
+ func main() {
 diff --git a/glide.yaml b/glide.yaml
 index c75e5f0..a444014 100644
 --- a/glide.yaml
