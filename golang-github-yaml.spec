@@ -31,6 +31,8 @@ Summary:        YAML support for the Go language
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# FIXME builds fine on F38 w/o this one
+BuildRequires:	golang(gopkg.in/check.v1)
 
 %description %{common_description}
 
