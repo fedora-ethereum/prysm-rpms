@@ -3,7 +3,8 @@
 %global debug_package %{nil}
 
 # https://github.com/ipfs/go-log
-%global goipath         github.com/ipfs/go-log
+%global goipath         github.com/ipfs/go-log/v2
+%global forgeurl        https://github.com/ipfs/go-log
 Version:                2.5.1
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
