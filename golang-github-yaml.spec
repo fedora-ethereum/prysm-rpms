@@ -33,6 +33,7 @@ URL:            %{gourl}
 Source:         %{gosource}
 # FIXME builds fine on F38 w/o this one
 BuildRequires:	golang(gopkg.in/check.v1)
+BuildRequires:	golang(gopkg.in/yaml.v3)
 
 %description %{common_description}
 
