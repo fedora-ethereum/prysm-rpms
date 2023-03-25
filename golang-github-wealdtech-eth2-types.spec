@@ -3,7 +3,8 @@
 %global debug_package %{nil}
 
 # https://github.com/wealdtech/go-eth2-types
-%global goipath         github.com/wealdtech/go-eth2-types
+%global goipath         github.com/wealdtech/go-eth2-types/v2
+%global forgeurl        https://github.com/wealdtech/go-eth2-types
 Version:                2.8.0
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
