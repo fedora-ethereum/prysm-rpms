@@ -55,7 +55,8 @@ BuildRequires:	golang(github.com/garyburd/redigo/redis)
 
 %if %{with check}
 %check
-%gocheck
+# FIXME tests requires Redis set up and running on port tcp:6379
+#%%gocheck
 %endif
 
 %gopkgfiles
