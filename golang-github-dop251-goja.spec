@@ -33,6 +33,7 @@ Summary:        ECMAScript/JavaScript engine in pure Go
 License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
+Patch1:		golang-github-dop251-goja-0001-Bootstrap-w-o-nodejs-support.patch
 #BuildRequires:	golang(github.com/dop251/goja_nodejs)
 
 %description %{common_description}

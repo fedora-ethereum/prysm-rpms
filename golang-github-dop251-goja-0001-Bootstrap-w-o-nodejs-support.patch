@@ -1,0 +1,29 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Sat, 25 Mar 2023 19:50:33 +0100
+Subject: [PATCH] Bootstrap w/o nodejs support
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/goja/main.go b/goja/main.go
+index 1015f46..90a5212 100644
+--- a/goja/main.go
++++ b/goja/main.go
+@@ -14,8 +14,6 @@ import (
+ 	"time"
+ 
+ 	"github.com/dop251/goja"
+-	"github.com/dop251/goja_nodejs/console"
+-	"github.com/dop251/goja_nodejs/require"
+ )
+ 
+ var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+@@ -63,9 +61,6 @@ func run() error {
+ 	vm := goja.New()
+ 	vm.SetRandSource(newRandSource())
+ 
+-	new(require.Registry).Enable(vm)
+-	console.Enable(vm)
+-
+ 	vm.Set("load", func(call goja.FunctionCall) goja.Value {
+ 		return load(vm, call)
+ 	})
