@@ -4,7 +4,7 @@
 
 # https://gopkg.in/cenkalti/backoff.v1
 %global goipath         gopkg.in/cenkalti/backoff.v1
-%global forgeurl        https://gopkg.in/cenkalti/backoff.v1
+%global forgeurl        https://github.com/cenkalti/backoff
 Version:                4.2.0
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
@@ -19,6 +19,7 @@ Version:                4.2.0
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 %gometa -f
 
+%global goaltipaths     github.com/cenkalti/backoff/v1
 
 %global common_description %{expand:
 # FIXME}
