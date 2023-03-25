@@ -41,6 +41,7 @@ Patch1:		golang-contrib-opencensus-exporter-jaeger-0001-Update-agent.go-1.patch
 
 %prep
 %goprep
+%autopatch -p1
 
 %generate_buildrequires
 %go_generate_buildrequires
