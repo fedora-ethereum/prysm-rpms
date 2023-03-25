@@ -32,6 +32,8 @@ Summary:        None
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# Taken from https://github.com/census-ecosystem/opencensus-go-exporter-jaeger/pull/22
+Patch1:		golang-contrib-opencensus-exporter-jaeger-0001-Update-agent.go-1.patch
 
 %description %{common_description}
 
