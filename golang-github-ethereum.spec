@@ -3,7 +3,7 @@
 
 # https://github.com/ethereum/go-ethereum
 %global goipath         github.com/ethereum/go-ethereum
-Version:                1.11.1
+Version:                1.11.5
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
