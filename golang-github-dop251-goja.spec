@@ -33,7 +33,7 @@ Summary:        ECMAScript/JavaScript engine in pure Go
 License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
-BuildRequires:	golang(github.com/dop251/goja_nodejs)
+#BuildRequires:	golang(github.com/dop251/goja_nodejs)
 
 %description %{common_description}
 
