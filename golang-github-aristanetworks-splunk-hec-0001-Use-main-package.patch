@@ -1,0 +1,16 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Sat, 25 Mar 2023 18:14:40 +0100
+Subject: [PATCH] Use main package
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/glide.yaml b/glide.yaml
+index e11e7ae..775891f 100644
+--- a/glide.yaml
++++ b/glide.yaml
+@@ -1,4 +1,4 @@
+-package: github.com/fuyufjh/splunk-hec-go
++package: github.com/aristanetworks/splunk-hec-go
+ import:
+ - package: github.com/satori/go.uuid
+   version: master

@@ -32,6 +32,7 @@ Summary:        Splunk HTTP Event Collector (HEC) Golang library
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+patch1:		golang-github-aristanetworks-splunk-hec-0001-Use-main-package.patch
 
 %description %{common_description}
 
