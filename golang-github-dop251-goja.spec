@@ -34,7 +34,8 @@ License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
 #Patch1:		golang-github-dop251-goja-0001-Bootstrap-w-o-nodejs-support.patch
-#BuildRequires:	golang(github.com/dop251/goja_nodejs)
+BuildRequires:	golang(github.com/dop251/goja_nodejs/console)
+BuildRequires:	golang(github.com/dop251/goja_nodejs/require)
 
 %description %{common_description}
 
