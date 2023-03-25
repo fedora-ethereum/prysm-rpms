@@ -3,7 +3,8 @@
 %global debug_package %{nil}
 
 # https://github.com/wealdtech/go-eth2-wallet-types
-%global goipath         github.com/wealdtech/go-eth2-wallet-types
+%global goipath         github.com/wealdtech/go-eth2-wallet-types/v2
+%global forgeurl        https://github.com/wealdtech/go-eth2-wallet-types
 Version:                2.10.0
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
