@@ -5,7 +5,7 @@
 # https://gopkg.in/cenkalti/backoff.v1
 %global goipath         gopkg.in/cenkalti/backoff.v1
 %global forgeurl        https://github.com/cenkalti/backoff
-Version:                4.2.0
+Version:                1.1.0
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
