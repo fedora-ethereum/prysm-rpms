@@ -32,6 +32,8 @@ Summary:        GOlang Property TestER
 License:        MIT
 URL:            %{gourl}
 Source:         %{gosource}
+# FIXME builds fine on F38 w/o this one
+BuildRequires:	golang(github.com/smartystreets/goconvey/convey)
 
 %description %{common_description}
 
