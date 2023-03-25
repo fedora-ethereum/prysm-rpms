@@ -33,6 +33,8 @@ Summary:        Txtpbfmt parses, edits and formats text proto files in a way tha
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# FIXME builds fine on F38 w/o this one
+BuildRequires:	golang(github.com/google/go-cmp/cmp)
 
 %description %{common_description}
 
