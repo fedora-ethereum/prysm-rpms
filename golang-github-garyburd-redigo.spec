@@ -32,6 +32,8 @@ Summary:        Go client for Redis
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# For testing only
+BuildRequires:	redis
 
 %description %{common_description}
 
