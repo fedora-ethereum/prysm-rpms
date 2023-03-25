@@ -31,6 +31,11 @@ Summary:        None
 License:        Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+# FIXME should go to herumi/bls-eth-go-binary
+BuildRequires:	mcl-devel
+# FIXME should go to herumi/bls-eth-go-binary
+BuildRequires:	bls-devel
+BuildRequires:	gcc-c++
 
 %if %{with check}
 BuildRequires:  golang(github.com/wealdtech/go-eth2-wallet-types/v2)
