@@ -50,7 +50,7 @@ Source:         %{gosource}
 
 %if %{with check}
 %check
-#%%gocheck
+%gocheck
 %endif
 
 %gopkgfiles
