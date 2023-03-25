@@ -3,7 +3,7 @@
 
 # https://github.com/grpc-ecosystem/grpc-gateway
 %global goipath         github.com/grpc-ecosystem/grpc-gateway
-Version:                2.15.0
+Version:                2.15.2
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
