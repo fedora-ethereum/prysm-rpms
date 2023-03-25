@@ -37,6 +37,7 @@ Summary:        Type-safe Redis client for Golang
 License:        BSD-2-Clause
 URL:            %{gourl}
 Source:         %{gosource}
+BuildRequires:	golang(github.com/garyburd/redigo/redis)
 
 %description %{common_description}
 
