@@ -5,7 +5,7 @@ Subject: [PATCH] Bootstrap w/o ygot support
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 
 diff --git a/client/gnmi/client.go b/client/gnmi/client.go
-index 781b7df..f93c21c 100644
+index 781b7df..ceb2d2c 100644
 --- a/client/gnmi/client.go
 +++ b/client/gnmi/client.go
 @@ -34,7 +34,6 @@ import (
@@ -16,14 +16,16 @@ index 781b7df..f93c21c 100644
  	"github.com/openconfig/gnmi/client"
  	"github.com/openconfig/gnmi/path"
  	"github.com/openconfig/gnmi/value"
-@@ -265,10 +264,7 @@ func subscribe(q client.Query) (*gpb.SubscribeRequest, error) {
+@@ -264,11 +263,8 @@ func subscribe(q client.Query) (*gpb.SubscribeRequest, error) {
+ 	if q.UpdatesOnly {
  		s.Subscribe.UpdatesOnly = true
  	}
- 	for _, qq := range q.Queries {
+-	for _, qq := range q.Queries {
 -		pp, err := ygot.StringToPath(pathToString(qq), ygot.StructuredPath, ygot.StringSlicePath)
 -		if err != nil {
 -			return nil, fmt.Errorf("invalid query path %q: %v", qq, err)
 -		}
++	for _, _ := range q.Queries {
 +		pp := &gpb.Path{Origin: "o"}
  		s.Subscribe.Subscription = append(s.Subscribe.Subscription, &gpb.Subscription{Path: pp})
  	}
