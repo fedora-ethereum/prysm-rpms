@@ -5,7 +5,7 @@ Subject: [PATCH] Bootstrap w/o ygot support
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 
 diff --git a/client/gnmi/client.go b/client/gnmi/client.go
-index 781b7df..ceb2d2c 100644
+index 781b7df..f35eb78 100644
 --- a/client/gnmi/client.go
 +++ b/client/gnmi/client.go
 @@ -34,7 +34,6 @@ import (
@@ -16,7 +16,7 @@ index 781b7df..ceb2d2c 100644
  	"github.com/openconfig/gnmi/client"
  	"github.com/openconfig/gnmi/path"
  	"github.com/openconfig/gnmi/value"
-@@ -264,11 +263,8 @@ func subscribe(q client.Query) (*gpb.SubscribeRequest, error) {
+@@ -264,13 +263,8 @@ func subscribe(q client.Query) (*gpb.SubscribeRequest, error) {
  	if q.UpdatesOnly {
  		s.Subscribe.UpdatesOnly = true
  	}
@@ -25,11 +25,13 @@ index 781b7df..ceb2d2c 100644
 -		if err != nil {
 -			return nil, fmt.Errorf("invalid query path %q: %v", qq, err)
 -		}
-+	for _, _ := range q.Queries {
-+		pp := &gpb.Path{Origin: "o"}
- 		s.Subscribe.Subscription = append(s.Subscribe.Subscription, &gpb.Subscription{Path: pp})
- 	}
+-		s.Subscribe.Subscription = append(s.Subscribe.Subscription, &gpb.Subscription{Path: pp})
+-	}
++	pp := &gpb.Path{Origin: "o"}
++	s.Subscribe.Subscription = append(s.Subscribe.Subscription, &gpb.Subscription{Path: pp})
  	return &gpb.SubscribeRequest{Request: s}, nil
+ }
+ 
 diff --git a/client/gnmi/client_test.go b/client/gnmi/client_test.go
 index 8afab8e..d457826 100644
 --- a/client/gnmi/client_test.go
