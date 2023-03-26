@@ -42,8 +42,6 @@ Source:         %{gosource}
 
 %prep
 %goprep
-# FIXME cannot build it right now
-rm -rf demo/uncompressed
 %autopatch -p1
 
 %generate_buildrequires
