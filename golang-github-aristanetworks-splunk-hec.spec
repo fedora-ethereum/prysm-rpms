@@ -51,7 +51,8 @@ Patch2:		golang-github-aristanetworks-splunk-hec-0002-Use-a-new-API.patch
 
 %if %{with check}
 %check
-%gocheck
+# FIXME requires test server up and running
+#%%gocheck
 %endif
 
 %gopkgfiles
