@@ -38,6 +38,7 @@ Summary:        Fairly general building blocks used in Arista Go code and open-s
 License:        BSD-3-Clause AND Apache-2.0
 URL:            %{gourl}
 Source:         %{gosource}
+Patch1:		golang-github-aristanetworks-goarista-0001-goarista-openconfig-use-GNMI-proto-instead-of-OpenCo.patch
 
 %description %{common_description}
 
@@ -45,6 +46,7 @@ Source:         %{gosource}
 
 %prep
 %goprep
+%autopatch -p1
 
 %generate_buildrequires
 %go_generate_buildrequires

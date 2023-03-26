@@ -1,0 +1,283 @@
+From: bneville <bneville@arista.com>
+Date: Mon, 18 Jul 2022 14:02:25 +0100
+Subject: [PATCH] goarista/openconfig: use GNMI proto instead of OpenConfig
+ proto
+
+The github.com/openconfig/reference/rpc/openconfig module no longer
+ exists, it was removed on 4th of May 2022 in:
+ https://github.com/openconfig/reference/commit/0901cf0e940b6efa86aef074e11f12525e7b0ce4
+ with the note:
+ "openconfig.proto has been deprecated for 5 years. Remove it."
+
+Being unable to find this module meant that go.mod could not be updated, as
+ `go get -u ./... && go mod tidy` would fail
+
+Change-Id: Icdd1c2f5fe8b14033c2a890d918fa8b5a38be79e
+
+diff --git a/openconfig/client/client.go b/openconfig/client/client.go
+index f1b20b9..2670119 100644
+--- a/openconfig/client/client.go
++++ b/openconfig/client/client.go
+@@ -12,7 +12,7 @@ import (
+ 
+ 	"github.com/aristanetworks/glog"
+ 	"github.com/golang/protobuf/proto"
+-	"github.com/openconfig/reference/rpc/openconfig"
++	"github.com/openconfig/gnmi/proto/gnmi"
+ 	"golang.org/x/net/context"
+ 	"google.golang.org/grpc"
+ 	"google.golang.org/grpc/metadata"
+@@ -25,7 +25,7 @@ type PublishFunc func(addr string, message proto.Message)
+ 
+ // Client is a connected gRPC client
+ type Client struct {
+-	client openconfig.OpenConfigClient
++	client gnmi.GNMIClient
+ 	ctx    context.Context
+ 	device string
+ }
+@@ -44,7 +44,7 @@ func New(username, password, addr string, opts []grpc.DialOption) *Client {
+ 		glog.Fatalf("Failed to dial: %s", err)
+ 	}
+ 	glog.Infof("Connected to %s", addr)
+-	client := openconfig.NewOpenConfigClient(conn)
++	client := gnmi.NewGNMIClient(conn)
+ 
+ 	ctx := context.Background()
+ 	if username != "" {
+@@ -60,9 +60,9 @@ func New(username, password, addr string, opts []grpc.DialOption) *Client {
+ }
+ 
+ // Get sends a get request and returns the responses
+-func (c *Client) Get(path string) []*openconfig.Notification {
+-	req := &openconfig.GetRequest{
+-		Path: []*openconfig.Path{
++func (c *Client) Get(path string) []*gnmi.Notification {
++	req := &gnmi.GetRequest{
++		Path: []*gnmi.Path{
+ 			{
+ 				Element: strings.Split(path, "/"),
+ 			},
+@@ -92,12 +92,12 @@ func (c *Client) Subscribe(wg *sync.WaitGroup, subscriptions []string,
+ 	defer stream.CloseSend()
+ 
+ 	for _, path := range subscriptions {
+-		sub := &openconfig.SubscribeRequest{
+-			Request: &openconfig.SubscribeRequest_Subscribe{
+-				Subscribe: &openconfig.SubscriptionList{
+-					Subscription: []*openconfig.Subscription{
++		sub := &gnmi.SubscribeRequest{
++			Request: &gnmi.SubscribeRequest_Subscribe{
++				Subscribe: &gnmi.SubscriptionList{
++					Subscription: []*gnmi.Subscription{
+ 						{
+-							Path: &openconfig.Path{Element: strings.Split(path, "/")},
++							Path: &gnmi.Path{Element: strings.Split(path, "/")},
+ 						},
+ 					},
+ 				},
+@@ -120,7 +120,7 @@ func (c *Client) Subscribe(wg *sync.WaitGroup, subscriptions []string,
+ 			return
+ 		}
+ 		switch resp := resp.Response.(type) {
+-		case *openconfig.SubscribeResponse_SyncResponse:
++		case *gnmi.SubscribeResponse_SyncResponse:
+ 			if !resp.SyncResponse {
+ 				panic("initial sync failed," +
+ 					" check that you're using a client compatible with the server")
+diff --git a/openconfig/json.go b/openconfig/json.go
+index 8eba88b..87090fa 100644
+--- a/openconfig/json.go
++++ b/openconfig/json.go
+@@ -10,20 +10,20 @@ import (
+ 	"fmt"
+ 	"strings"
+ 
+-	"github.com/openconfig/reference/rpc/openconfig"
++	"github.com/openconfig/gnmi/proto/gnmi"
+ )
+ 
+ // joinPath builds a string out of an Element
+-func joinPath(path *openconfig.Path) string {
++func joinPath(path *gnmi.Path) string {
+ 	if path == nil {
+ 		return ""
+ 	}
+ 	return strings.Join(path.Element, "/")
+ }
+ 
+-func convertUpdate(update *openconfig.Update) (interface{}, error) {
++func convertUpdate(update *gnmi.Update) (interface{}, error) {
+ 	switch update.Value.Type {
+-	case openconfig.Type_JSON:
++	case gnmi.Encoding_JSON:
+ 		var value interface{}
+ 		decoder := json.NewDecoder(bytes.NewReader(update.Value.Value))
+ 		decoder.UseNumber()
+@@ -32,7 +32,7 @@ func convertUpdate(update *openconfig.Update) (interface{}, error) {
+ 				update.Value.Value, update)
+ 		}
+ 		return value, nil
+-	case openconfig.Type_BYTES:
++	case gnmi.Encoding_BYTES:
+ 		return update.Value.Value, nil
+ 	default:
+ 		return nil,
+@@ -41,7 +41,7 @@ func convertUpdate(update *openconfig.Update) (interface{}, error) {
+ }
+ 
+ // NotificationToJSON converts a Notification into a JSON string
+-func NotificationToJSON(notif *openconfig.Notification) (string, error) {
++func NotificationToJSON(notif *gnmi.Notification) (string, error) {
+ 	m := make(map[string]interface{}, 1)
+ 	m["timestamp"] = notif.Timestamp
+ 	m["path"] = "/" + joinPath(notif.Prefix)
+@@ -72,15 +72,13 @@ func NotificationToJSON(notif *openconfig.Notification) (string, error) {
+ }
+ 
+ // SubscribeResponseToJSON converts a SubscribeResponse into a JSON string
+-func SubscribeResponseToJSON(resp *openconfig.SubscribeResponse) (string, error) {
++func SubscribeResponseToJSON(resp *gnmi.SubscribeResponse) (string, error) {
+ 	m := make(map[string]interface{}, 1)
+ 	var err error
+ 	switch resp := resp.Response.(type) {
+-	case *openconfig.SubscribeResponse_Update:
++	case *gnmi.SubscribeResponse_Update:
+ 		return NotificationToJSON(resp.Update)
+-	case *openconfig.SubscribeResponse_Heartbeat:
+-		m["heartbeat"] = resp.Heartbeat.Interval
+-	case *openconfig.SubscribeResponse_SyncResponse:
++	case *gnmi.SubscribeResponse_SyncResponse:
+ 		m["syncResponse"] = resp.SyncResponse
+ 	default:
+ 		return "", fmt.Errorf("Unknown type of response: %T: %s", resp, resp)
+@@ -133,7 +131,7 @@ func addPathToMap(root map[string]interface{}, path []string, escape EscapeFunc)
+ }
+ 
+ // NotificationToMap maps a Notification into a nested map of entities
+-func NotificationToMap(addr string, notification *openconfig.Notification,
++func NotificationToMap(addr string, notification *gnmi.Notification,
+ 	escape EscapeFunc) (map[string]interface{}, error) {
+ 	if escape == nil {
+ 		escape = func(name string) string {
+@@ -195,11 +193,11 @@ func NotificationToMap(addr string, notification *openconfig.Notification,
+ 			value := update.GetValue()
+ 			var unmarshaledValue interface{}
+ 			switch value.Type {
+-			case openconfig.Type_JSON:
++			case gnmi.Encoding_JSON:
+ 				if err := json.Unmarshal(value.Value, &unmarshaledValue); err != nil {
+ 					return nil, err
+ 				}
+-			case openconfig.Type_BYTES:
++			case gnmi.Encoding_BYTES:
+ 				unmarshaledValue = update.Value.Value
+ 			default:
+ 				return nil, fmt.Errorf("Unexpected value type %s for path %v",
+@@ -227,7 +225,7 @@ func NotificationToMap(addr string, notification *openconfig.Notification,
+ }
+ 
+ // NotificationToJSONDocument maps a Notification into a single JSON document
+-func NotificationToJSONDocument(addr string, notification *openconfig.Notification,
++func NotificationToJSONDocument(addr string, notification *gnmi.Notification,
+ 	escape EscapeFunc) ([]byte, error) {
+ 	m, err := NotificationToMap(addr, notification, escape)
+ 	if err != nil {
+diff --git a/openconfig/json_test.go b/openconfig/json_test.go
+index 1dfc41d..e3d12af 100644
+--- a/openconfig/json_test.go
++++ b/openconfig/json_test.go
+@@ -10,7 +10,7 @@ import (
+ 
+ 	"github.com/aristanetworks/goarista/test"
+ 
+-	"github.com/openconfig/reference/rpc/openconfig"
++	"github.com/openconfig/gnmi/proto/gnmi"
+ )
+ 
+ func TestNotificationToMap(t *testing.T) {
+@@ -24,32 +24,32 @@ func TestNotificationToMap(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ 	tests := []struct {
+-		notification openconfig.Notification
++		notification gnmi.Notification
+ 		json         map[string]interface{}
+ 	}{{
+-		notification: openconfig.Notification{
+-			Prefix: &openconfig.Path{
++		notification: gnmi.Notification{
++			Prefix: &gnmi.Path{
+ 				Element: []string{
+ 					"foo",
+ 				},
+ 			},
+-			Update: []*openconfig.Update{
++			Update: []*gnmi.Update{
+ 				{
+-					Path: &openconfig.Path{
++					Path: &gnmi.Path{
+ 						Element: []string{
+ 							"route1",
+ 						},
+ 					},
+-					Value: &openconfig.Value{
++					Value: &gnmi.Value{
+ 						Value: valueJSON,
+ 					},
+ 				}, {
+-					Path: &openconfig.Path{
++					Path: &gnmi.Path{
+ 						Element: []string{
+ 							"route2",
+ 						},
+ 					},
+-					Value: &openconfig.Value{
++					Value: &gnmi.Value{
+ 						Value: valueJSON,
+ 					},
+ 				}},
+@@ -73,13 +73,13 @@ func TestNotificationToMap(t *testing.T) {
+ 			},
+ 		},
+ 	}, {
+-		notification: openconfig.Notification{
+-			Prefix: &openconfig.Path{
++		notification: gnmi.Notification{
++			Prefix: &gnmi.Path{
+ 				Element: []string{
+ 					"foo", "bar",
+ 				},
+ 			},
+-			Delete: []*openconfig.Path{
++			Delete: []*gnmi.Path{
+ 				{
+ 					Element: []string{
+ 						"route", "237.255.255.250_0.0.0.0",
+@@ -90,13 +90,13 @@ func TestNotificationToMap(t *testing.T) {
+ 					},
+ 				},
+ 			},
+-			Update: []*openconfig.Update{{
+-				Path: &openconfig.Path{
++			Update: []*gnmi.Update{{
++				Path: &gnmi.Path{
+ 					Element: []string{
+ 						"route",
+ 					},
+ 				},
+-				Value: &openconfig.Value{
++				Value: &gnmi.Value{
+ 					Value: valueJSON,
+ 				},
+ 			}},
+@@ -127,7 +127,8 @@ func TestNotificationToMap(t *testing.T) {
+ 			},
+ 		},
+ 	}}
+-	for _, tcase := range tests {
++	for i := 0; i < len(tests); i++ {
++		tcase := &tests[i] // index slice to avoid copying struct with mutex in it
+ 		actual, err := NotificationToMap("cairo", &tcase.notification, nil)
+ 		if err != nil {
+ 			t.Fatal(err)
