@@ -25,7 +25,7 @@ Marshaling/Unmarshaling.}
 %global golicenses      LICENSE
 %global godocs          docs CONTRIBUTING.md README.md\\\
                         demo/getting_started/README.md\\\
-                        demo/uncompressed/README.md exampleoc/README.md\\\
+                        exampleoc/README.md\\\
                         gnmidiff/README.md uexampleoc/README.md
 
 Name:           %{goname}
@@ -48,8 +48,7 @@ Source:         %{gosource}
 %go_generate_buildrequires
 
 %build
-make generate
-for cmd in demo/protobuf_getting_started demo/uncompressed demo/device generator proto_generator demo/optical gnmidiff/gnmidiff demo/getting_started demo/gnmi_telemetry demo/bgp; do
+for cmd in demo/protobuf_getting_started demo/device generator proto_generator demo/optical gnmidiff/gnmidiff demo/getting_started demo/gnmi_telemetry demo/bgp; do
   %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
 done
 
@@ -66,7 +65,7 @@ install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 %files
 %license LICENSE
 %doc docs CONTRIBUTING.md README.md demo/getting_started/README.md
-%doc demo/uncompressed/README.md exampleoc/README.md gnmidiff/README.md
+%doc exampleoc/README.md gnmidiff/README.md
 %doc uexampleoc/README.md
 %{_bindir}/*
 
