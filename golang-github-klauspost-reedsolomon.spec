@@ -45,9 +45,6 @@ Source:         %{gosource}
 
 %build
 %gobuild -o %{gobuilddir}/bin/reedsolomon %{goipath}
-for cmd in _gen; do
-  %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
-done
 
 %install
 %gopkginstall
