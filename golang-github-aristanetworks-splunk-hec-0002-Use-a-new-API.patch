@@ -5,14 +5,14 @@ Subject: [PATCH] Use a new API
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 
 diff --git a/client.go b/client.go
-index e71483a..317ffdb 100644
+index e71483a..60e3aec 100644
 --- a/client.go
 +++ b/client.go
 @@ -43,12 +43,13 @@ type Client struct {
  }
  
  func NewClient(serverURL string, token string) HEC {
-+	id, _ := NewV4()
++	id, _ := uuid.NewV4()
  	return &Client{
  		httpClient: http.DefaultClient,
  		serverURL:  serverURL,
@@ -24,7 +24,7 @@ index e71483a..317ffdb 100644
  		maxLength:  defaultMaxContentLength,
  	}
 diff --git a/cluster.go b/cluster.go
-index 726fe2d..a450de5 100644
+index 726fe2d..0e502db 100644
 --- a/cluster.go
 +++ b/cluster.go
 @@ -21,7 +21,8 @@ type Cluster struct {
@@ -32,7 +32,7 @@ index 726fe2d..a450de5 100644
  
  func NewCluster(serverURLs []string, token string) HEC {
 -	channel := uuid.NewV4().String()
-+	id, _ := NewV4()
++	id, _ := uuid.NewV4()
 +	channel := id.String()
  	clients := make([]*Client, len(serverURLs))
  	for i, serverURL := range serverURLs {
