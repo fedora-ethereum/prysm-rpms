@@ -3,7 +3,8 @@
 %global debug_package %{nil}
 
 # https://github.com/thomaso-mirodin/intmath
-%global goipath         github.com/thomaso-mirodin/intmath
+%global goipath         code.google.com/p/intmath
+%global forgeurl        https://github.com/thomaso-mirodin/intmath
 %global commit          5dc6d854e46e8db72326367254b8de5d2c5f2f4f
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
@@ -17,6 +18,8 @@
 # ---
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 %gometa -f
+
+%global goaltipaths github.com/thomaso-mirodin/intmath
 
 %global common_description %{expand:
 Migration of an intmath library from from code.google.com/p/intmath.}
