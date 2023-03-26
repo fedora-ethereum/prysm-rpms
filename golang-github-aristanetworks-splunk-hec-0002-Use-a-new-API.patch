@@ -1,0 +1,39 @@
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Sun, 26 Mar 2023 17:38:43 +0200
+Subject: [PATCH] Use a new API
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+
+diff --git a/client.go b/client.go
+index e71483a..317ffdb 100644
+--- a/client.go
++++ b/client.go
+@@ -43,12 +43,13 @@ type Client struct {
+ }
+ 
+ func NewClient(serverURL string, token string) HEC {
++	id, _ := NewV4()
+ 	return &Client{
+ 		httpClient: http.DefaultClient,
+ 		serverURL:  serverURL,
+ 		token:      token,
+ 		keepAlive:  true,
+-		channel:    uuid.NewV4().String(),
++		channel:    id.String(),
+ 		retries:    2,
+ 		maxLength:  defaultMaxContentLength,
+ 	}
+diff --git a/cluster.go b/cluster.go
+index 726fe2d..a450de5 100644
+--- a/cluster.go
++++ b/cluster.go
+@@ -21,7 +21,8 @@ type Cluster struct {
+ }
+ 
+ func NewCluster(serverURLs []string, token string) HEC {
+-	channel := uuid.NewV4().String()
++	id, _ := NewV4()
++	channel := id.String()
+ 	clients := make([]*Client, len(serverURLs))
+ 	for i, serverURL := range serverURLs {
+ 		clients[i] = &Client{
