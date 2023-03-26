@@ -49,8 +49,6 @@ Source:         %{gosource}
 
 %install
 %gopkginstall
-install -m 0755 -vd                     %{buildroot}%{_bindir}
-install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 
 %if %{with check}
 %check
@@ -62,7 +60,6 @@ install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 %doc docs CONTRIBUTING.md README.md
 %doc exampleoc/README.md gnmidiff/README.md
 %doc uexampleoc/README.md
-%{_bindir}/*
 
 %gopkgfiles
 
