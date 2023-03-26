@@ -19,7 +19,7 @@
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 %gometa -f
 
-%global goaltipaths github.com/thomaso-mirodin/intmath
+%global goaltipaths github.com/thomaso-mirodin/intmath github.com/thomaso-mirodin/intmath/constants/c32 github.com/thomaso-mirodin/intmath/constants/c64
 
 %global common_description %{expand:
 Migration of an intmath library from from code.google.com/p/intmath.}
