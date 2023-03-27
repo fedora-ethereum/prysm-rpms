@@ -42,6 +42,7 @@ Patch1:		golang-github-aristanetworks-goarista-0001-goarista-openconfig-use-GNMI
 Patch2:		golang-github-aristanetworks-goarista-0002-kafka-Drop-support-for-openconfig.proto.patch
 Patch3:		golang-github-aristanetworks-goarista-0003-gnmi-Update-expected-string-for-Any-type-in-TestStrU.patch
 Patch4:		golang-github-aristanetworks-goarista-0004-update-go-versions-under-test.patch
+Patch5:		golang-github-aristanetworks-goarista-0005-sizeof-fix-sizeof-for-go1.18.patch
 
 %description %{common_description}
 
