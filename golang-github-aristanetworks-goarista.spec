@@ -53,8 +53,8 @@ Patch2:		golang-github-aristanetworks-goarista-0002-kafka-Drop-support-for-openc
 %go_generate_buildrequires
 
 %build
-for cmd in cmd/* ; do
-  %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
+for cmd in gnmi gnmireverse_client gnmireverse_server importsort json2test ockafka ocprometheus ocredis ocsplunk octsdb test2influxdb ; do
+  %gobuild -o %{gobuilddir}/bin/$cmd %{goipath}/cmd/$cmd
 done
 
 %install
