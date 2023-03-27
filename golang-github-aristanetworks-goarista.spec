@@ -41,6 +41,7 @@ Source:         %{gosource}
 Patch1:		golang-github-aristanetworks-goarista-0001-goarista-openconfig-use-GNMI-proto-instead-of-OpenCo.patch
 Patch2:		golang-github-aristanetworks-goarista-0002-kafka-Drop-support-for-openconfig.proto.patch
 Patch3:		golang-github-aristanetworks-goarista-0003-gnmi-Update-expected-string-for-Any-type-in-TestStrU.patch
+Patch4:		golang-github-aristanetworks-goarista-0004-update-go-versions-under-test.patch
 
 %description %{common_description}
 

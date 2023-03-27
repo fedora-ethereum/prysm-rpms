@@ -1,0 +1,37 @@
+From: Romanos Skiadas <rski@arista.com>
+Date: Tue, 28 Jul 2020 10:58:34 +0100
+Subject: [PATCH] update go versions under test
+
+remove 1.12, add 1.14 and master again
+
+Change-Id: I8e94dca9b3557bb7e1d682c118712af76872551f
+
+diff --git a/.travis.yml b/.travis.yml
+index cf7605f..b743480 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -1,9 +1,8 @@
+ language: go
+ go:
+-- 1.12.x
+ - 1.13.x
+-# Master disabled while until key.composite is replaced
+-# - master
++- 1.14.x
++- master
+ env:
+ # GOSUMDB is to make go1.12 behave like go1.13
+ - GO111MODULE=on GOSUMDB=sum.golang.org
+diff --git a/key/key_test.go b/key/key_test.go
+index 973fbae..310d04b 100644
+--- a/key/key_test.go
++++ b/key/key_test.go
+@@ -638,7 +638,7 @@ func BenchmarkGetFromMapWithMapKey(b *testing.B) {
+ 	b.ReportAllocs()
+ 	b.ResetTimer()
+ 	for i := 0; i < b.N; i++ {
+-		key := New(map[string]interface{}{string('a' + i%19): true})
++		key := New(map[string]interface{}{fmt.Sprint('a' + i%19): true})
+ 		_, found := m.Get(key)
+ 		if !found {
+ 			b.Fatalf("WTF: %#v", key)
