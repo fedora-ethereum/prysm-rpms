@@ -1,0 +1,30 @@
+From: jcr <jcr@arista.com>
+Date: Fri, 20 Nov 2020 13:58:56 -0800
+Subject: [PATCH] gnmi: Update expected string for Any type in TestStrUpdateVal
+
+Switch proto.CompactTextString(anyMsg) to anyMsg.String() to match what
+we expect to see for protobuf v1.4.1.
+
+Change-Id: I8d7413e3198db2f5a8c272ca8f8cc7109a504fa3
+
+diff --git a/gnmi/operation_test.go b/gnmi/operation_test.go
+index 677bd50..88e166d 100644
+--- a/gnmi/operation_test.go
++++ b/gnmi/operation_test.go
+@@ -127,7 +127,6 @@ func TestStrUpdateVal(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ 	anyMessage := &any.Any{TypeUrl: "gnmi/ModelData", Value: anyBytes}
+-	anyString := proto.CompactTextString(anyMessage)
+ 
+ 	for name, tc := range map[string]struct {
+ 		update *pb.Update
+@@ -225,7 +224,7 @@ func TestStrUpdateVal(t *testing.T) {
+ 		"AnyVal": {
+ 			update: &pb.Update{Val: &pb.TypedValue{
+ 				Value: &pb.TypedValue_AnyVal{AnyVal: anyMessage}}},
+-			exp: anyString,
++			exp: anyMessage.String(),
+ 		},
+ 		"JsonVal": {
+ 			update: &pb.Update{Val: &pb.TypedValue{
