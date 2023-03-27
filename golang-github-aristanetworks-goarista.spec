@@ -48,7 +48,6 @@ Patch2:		golang-github-aristanetworks-goarista-0002-kafka-Drop-support-for-openc
 %prep
 %goprep
 %autopatch -p1
-rm -f cmd/README.md
 
 %generate_buildrequires
 %go_generate_buildrequires
@@ -70,7 +69,7 @@ install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 
 %files
 %license COPYING monitor/stats/LICENSE
-%doc AUTHORS README.md cmd/gnmi/README.md
+%doc AUTHORS README.md cmd/README.md cmd/gnmi/README.md
 %doc cmd/gnmireverse_client/README.md cmd/occli/README.md cmd/ockafka/README.md
 %doc cmd/ocprometheus/README.md cmd/ocredis/README.md cmd/ocsplunk/README.md
 %doc cmd/octsdb/README.md cmd/openconfigbeat/README.md gnmireverse/README.md
