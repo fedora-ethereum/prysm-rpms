@@ -3,7 +3,7 @@
 
 # https://github.com/prysmaticlabs/prysm
 %global goipath         github.com/prysmaticlabs/prysm
-Version:                3.2.2
+Version:                4.0.1
 
 # REMOVE BEFORE SUBMITTING THIS FOR REVIEW
 # ---
